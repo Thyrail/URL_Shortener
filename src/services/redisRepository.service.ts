@@ -1,5 +1,4 @@
 import { Injectable } from '@nestjs/common';
-import { clear } from 'console';
 const Redis = require ("ioredis");
 
 @Injectable()
@@ -11,11 +10,9 @@ export class RedisrepositoryService
     constructor() 
     {
         this.db = new Redis({
-
-            port: process.env.REDIS_PORT, // Redis port
-            host: process.env.REDIS_HOST  // LocalHost
-
-          });
+            port: process.env.REDIS_PORT || 6379, // Redis port
+            host: process.env.REDIS_HOST // LocalHost
+        });
     }
 
     /**

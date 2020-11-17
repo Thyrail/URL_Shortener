@@ -72,5 +72,18 @@
     ],
     "coverageDirectory": "../coverage",
     "testEnvironment": "node"
-  }
+  },
+  "main": ".eslintrc.js",
+  "directories": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Thyrail/URL_Shortener.git"
+  },
+  "author": "",
+  "bugs": {
+    "url": "https://github.com/Thyrail/URL_Shortener/issues"
+  },
+  "homepage": "https://github.com/Thyrail/URL_Shortener#readme"
 }
