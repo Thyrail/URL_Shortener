@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 const md5 = require ('md5'); 
 
 @Injectable()
+
 export class UrlshortenerService 
 {
     shorten(longUrl: string): string 
