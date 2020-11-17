@@ -8,8 +8,8 @@ import { UrlshortenerService } from '../services/urlshortener.service';
 
 export class UrlshortenerController 
 {
-    constructor(private urlshortenerService: UrlshortenerService, private redisRepositoryService: RedisrepositoryService) {}
-
+    constructor(private urlshortenerService: UrlshortenerService,
+                private redisRepositoryService: RedisrepositoryService) {}
     /**
      * Postman POST body raw json // Test funktioniert
      *  {
@@ -53,16 +53,16 @@ export class UrlshortenerController
 
         if (longUrl) 
         {
-            return `Gibt die Original URL aus: ${longUrl}`;
+            return `Gibt die URL aus: ${longUrl}`;
         } 
         else 
         {
-            // Gebe eine Fehlermeldung zurück.
+            return `Sorry, die URL ist zur Zeit nicht verfügbar!`
         }
     }
     /**
      *  localhost:3000/1234567 // Test funktioniert
-     * @param id Delete /:id 
+     * @param id DELETE /:id 
      *
      */
     @Delete(':id')
