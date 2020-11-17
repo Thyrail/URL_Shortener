@@ -1,11 +1,10 @@
-import { CacheInterceptor, Controller, Delete, Get, Param, Post, Req, UseInterceptors } from '@nestjs/common';
+import { Controller, Delete, Get, Param, Post, Req } from '@nestjs/common';
 import { Request } from 'express';
 import { RedisrepositoryService } from 'src/services/redisRepository.service';
 import { UrlshortenerService } from '../services/urlshortener.service';
 
 // localhost:3000/urlshortener
 @Controller('')
-@UseInterceptors(CacheInterceptor) // https://docs.nestjs.com/techniques/caching
 
 export class UrlshortenerController 
 {
