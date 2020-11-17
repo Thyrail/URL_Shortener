@@ -1,4 +1,4 @@
-import { CacheInterceptor, Controller, Get, Param, Post, Req, UseInterceptors } from '@nestjs/common';
+import { CacheInterceptor, Controller, Delete, Get, Param, Post, Req, UseInterceptors } from '@nestjs/common';
 import { Request } from 'express';
 import { RedisrepositoryService } from 'src/services/redisRepository.service';
 import { UrlshortenerService } from '../services/urlshortener.service';
@@ -12,16 +12,19 @@ export class UrlshortenerController
     constructor(private urlshortenerService: UrlshortenerService, private redisRepositoryService: RedisrepositoryService) {}
 
     /**
-     * TODO: Beschreibung hinterlegen
+     * Postman POST body raw json
+     *  {
+            "url": "www.g2a.com" test 
+        }
      * 
      * @endpoint GET /:id
      */
     @Post()
     getShortURL(@Req() request: Request): string 
     {
-        // TODO: 1. Prüfen, ob request.body.url vorhanden ist
-        // TODO: 2. Prüfen, ob der Wert eine valide URL ist -> URL steht für: Uniform Resource Locator. In other words, an URL is what gives you access to various HTML pages from the Web. If you are being asked for a valid URL, that simply means the address you entered is wrong.
-"
+        // Prüfen, ob request.body.url vorhanden ist
+        // Prüfen, ob der Wert eine valide URL ist -> URL steht für: Uniform Resource Locator. In other words, an URL is what gives you access to various HTML pages from the Web. If you are being asked for a valid URL, that simply means the address you entered is wrong.
+
         const longUrl = request.body.url; 
         const shortUrlId = this.urlshortenerService.shorten(longUrl);
 
@@ -51,12 +54,21 @@ export class UrlshortenerController
 
         if (longUrl) 
         {
-            return longUrl;
+            return `Gibt die Original URL aus: ${longUrl}`;
         } 
         else 
         {
             // Gebe eine Fehlermeldung zurück.
         }
+    }
+    /**
+     *  
+     * @param id Delete /:id 
+     *
+     */
+    @Delete(':id')
+    remove(@Param('id') id: string) {
+        return `Die id ${id} wurde erfolgreich gelöscht`;
     }
 }
 
