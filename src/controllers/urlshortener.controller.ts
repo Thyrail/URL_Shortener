@@ -12,9 +12,9 @@ export class UrlshortenerController
     constructor(private urlshortenerService: UrlshortenerService, private redisRepositoryService: RedisrepositoryService) {}
 
     /**
-     * Postman POST body raw json
+     * Postman POST body raw json // Test funktioniert
      *  {
-            "url": "www.g2a.com" test 
+            "url": "www.g2a.com"
         }
      * 
      * @endpoint GET /:id
@@ -29,7 +29,7 @@ export class UrlshortenerController
         const shortUrlId = this.urlshortenerService.shorten(longUrl);
 
         // Kommunikation mit Redis
-        // TODO: Anfrage soll nicht blockierend sein! Eine Asynchrone Funktion machen?
+        // Anfrage soll nicht blockierend sein.. Eine Asynchrone Funktion machen?
         this.redisRepositoryService.set(shortUrlId, longUrl);
         // IIFE (Immediately invoked function expression)
         // (async() => {
@@ -43,7 +43,7 @@ export class UrlshortenerController
     }
 
     /**
-     * Frage zu einer short URL ID die gespeicherte lange URL von Redis ab
+     * Frage zu einer short URL ID die gespeicherte lange URL von Redis ab // Test funktioniert
      * 
      * @endpoint GET /:id
      */
@@ -62,7 +62,7 @@ export class UrlshortenerController
         }
     }
     /**
-     *  
+     *  localhost:3000/1234567 // Test funktioniert
      * @param id Delete /:id 
      *
      */
