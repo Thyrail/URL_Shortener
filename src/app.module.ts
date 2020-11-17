@@ -10,7 +10,7 @@ import { ConfigModule } from '@nestjs/config';
  
   controllers: [UrlshortenerController],
  
-  providers: [UrlshortenerService, RedisrepositoryService],
+  providers: [UrlshortenerService, RedisrepositoryService]
 })
 
 export class AppModule {}

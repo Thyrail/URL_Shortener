@@ -53,22 +53,15 @@ export class UrlshortenerController
 
         if (longUrl) 
         {
-            return `Gibt die URL aus: ${longUrl}`;
+            return longUrl;
         } 
         else 
         {
-            return `Sorry, die URL ist zur Zeit nicht verfügbar!`
+            return `Diese URL ist zur Zeit nicht verfügbar!`
         }
+
     }
-    /**
-     *  localhost:3000/1234567 // Test funktioniert
-     * @param id DELETE /:id 
-     *
-     */
-    @Delete(':id')
-    remove(@Param('id') id: string) {
-        return `Die id ${id} wurde erfolgreich gelöscht`;
-    }
+
 }
 
 
