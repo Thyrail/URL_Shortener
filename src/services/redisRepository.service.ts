@@ -3,7 +3,7 @@ const Redis = require ("ioredis");
 
 @Injectable()
 
-export class RedisrepositoryService 
+export class RedisRepositoryService 
 {
     private db; // DataBase
 
@@ -31,4 +31,8 @@ export class RedisrepositoryService
         return this.db.get(key);
     }
 
+    // delete(value: string): string
+    // {
+    //     return this.db.delete(value)
+    // }
 }

@@ -26,6 +26,7 @@
     "@nestjs/platform-express": "^7.5.1",
     "@nestjs/swagger": "^4.7.3",
     "cache-manager": "^3.4.0",
+    "hbs": "^4.1.1",
     "ioredis": "^4.19.2",
     "md5": "^2.3.0",
     "redis": "^3.0.2",

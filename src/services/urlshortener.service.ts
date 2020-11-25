@@ -3,7 +3,7 @@ const md5 = require ('md5');
 
 @Injectable()
 
-export class UrlshortenerService 
+export class UrlShortenerService 
 {
     shorten(longUrl: string): string 
     {

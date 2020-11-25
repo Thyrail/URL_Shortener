@@ -1,15 +1,15 @@
-import { Controller, Delete, Get, Param, Post, Req } from '@nestjs/common';
+import { Controller, Delete, Get, Param, Post, Req, Res } from '@nestjs/common';
 import { Request } from 'express';
-import { RedisrepositoryService } from 'src/services/redisRepository.service';
-import { UrlshortenerService } from '../services/urlshortener.service';
+import { RedisRepositoryService } from 'src/services/redisRepository.service';
+import { UrlShortenerService } from '../services/urlshortener.service';
 
 // localhost:3000/urlshortener
 @Controller('')
 
 export class UrlshortenerController 
 {
-    constructor(private urlshortenerService: UrlshortenerService,
-                private redisRepositoryService: RedisrepositoryService) {}
+    constructor(private urlshortenerService: UrlShortenerService,
+                private redisRepositoryService: RedisRepositoryService) {}
     /**
      * Postman POST body raw json // Test funktioniert
      *  {
@@ -61,6 +61,12 @@ export class UrlshortenerController
         }
 
     }
+
+    // @Delete('post/:id')
+    // async deletePost(@Param('id') id: string)
+    // {
+    //     return this.redisRepositoryService.deletePost({ id: Number(id)})
+    // }
 
 }
 
