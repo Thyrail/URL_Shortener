@@ -8,7 +8,9 @@ import { join } from 'path';
 async function bootstrap()
 {
   const app = await NestFactory.create<NestExpressApplication>
-  (AppModule);
+  (
+    AppModule,
+  );
 
   // http://localhost:3000/api/
   // app.setGlobalPrefix('api');

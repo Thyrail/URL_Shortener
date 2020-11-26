@@ -1,5 +1,5 @@
 import { Controller, Delete, Get, Param, Post, Req, Res } from '@nestjs/common';
-import { Request } from 'express';
+import { Request, Response } from 'express';
 import { RedisRepositoryService } from 'src/services/redisRepository.service';
 import { UrlShortenerService } from '../services/urlshortener.service';
 
@@ -39,7 +39,7 @@ export class UrlshortenerController
         // shortUrlId-longUrl
 
         return `https://localhost:3000/${shortUrlId}`;
-    }
+    };
     
     /**
      * Frage zu einer short URL ID die gespeicherte lange URL von Redis ab // Test funktioniert
@@ -59,8 +59,7 @@ export class UrlshortenerController
         {
             //
         }
-
-    }
+    };
 
     // @Delete(':id/delete')
     // async deleteShortURL(@Param('id') id): Promise<any>
