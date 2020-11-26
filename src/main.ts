@@ -12,12 +12,8 @@ async function bootstrap()
     AppModule,
   );
 
-  // http://localhost:3000/api/
-  // app.setGlobalPrefix('api');
-
   app.useStaticAssets(join(__dirname, '..', 'public'));
   app.setBaseViewsDir(join(__dirname, '..', 'views'));
-  // app.setViewEngine('pug')
   app.setViewEngine('hbs');
 
   SwaggerModule.setup('api', app, createDocument(app));
@@ -26,3 +22,7 @@ async function bootstrap()
 } 
 
 bootstrap();
+
+
+  // http://localhost:3000/api/
+  // app.setGlobalPrefix('api');

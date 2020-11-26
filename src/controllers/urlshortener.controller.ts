@@ -29,11 +29,12 @@ export class UrlshortenerController
 
         // Kommunikation mit Redis
         // Anfrage soll nicht blockierend sein.. Eine Asynchrone Funktion machen?
-        this.redisRepositoryService.set(shortUrlId, longUrl);
+
         // IIFE (Immediately invoked function expression)
-        // (async() => {
-        //     this.redisRepositoryService.set(shortUrlId, longUrl);
-        // })();
+        (async() => {
+            this.redisRepositoryService.set(shortUrlId, longUrl);
+        })();
+        // this.redisRepositoryService.set(shortUrlId, longUrl);
 
         // <key>-<value>
         // shortUrlId-longUrl
@@ -41,6 +42,11 @@ export class UrlshortenerController
         return `https://localhost:3000/${shortUrlId}`;
     };
     
+    @Post()
+    async checkForShortURL(@Param() request: Request): Promise<string>
+    {
+        return
+    }
     /**
      * Frage zu einer short URL ID die gespeicherte lange URL von Redis ab // Test funktioniert
      * 
@@ -61,11 +67,11 @@ export class UrlshortenerController
         }
     };
 
-    // @Delete(':id/delete')
-    // async deleteShortURL(@Param('id') id): Promise<any>
-    // {
-    //     return this.redisRepositoryService.delete(id)
-    // }
+    @Delete(':id/delete')
+    async deleteShortURL(@Param('id') id): Promise<any>
+    {
+        return this.redisRepositoryService.del(id)
+    }
 
 }
 
