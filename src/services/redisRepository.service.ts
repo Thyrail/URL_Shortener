@@ -18,7 +18,7 @@ export class RedisRepositoryService
     /**
      * Kurze URL hinterlegen
      */
-    set(key: string, value: string): void 
+    async set(key: string, value: string): Promise<void> 
     {
         this.db.set(key, value);
     }
@@ -26,10 +26,14 @@ export class RedisRepositoryService
     /**
      * Lange URL abfragen
      */
-    get(key: string): string 
+    async get(key: string): Promise<string> 
     {
         return this.db.get(key);
     }
+
+    // async delete(id): Promise<DeleteResult> {
+    //     return await this.redisRepository.service.delete(id);
+    // }
 
     // delete(value: string): string
     // {

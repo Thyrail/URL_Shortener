@@ -19,7 +19,7 @@ export class UrlshortenerController
      * @endpoint GET /:id
      */
     @Post()
-    getShortURL(@Req() request: Request): string 
+    async addShortURL(@Req() request: Request): Promise<string>
     {
         // Prüfen, ob request.body.url vorhanden ist
         // Prüfen, ob der Wert eine valide URL ist -> URL steht für: Uniform Resource Locator. In other words, an URL is what gives you access to various HTML pages from the Web. If you are being asked for a valid URL, that simply means the address you entered is wrong.
@@ -47,7 +47,7 @@ export class UrlshortenerController
      * @endpoint GET /:id
      */
     @Get(':id')
-    getLongURL(@Param('id') id): string 
+    async getLongURL(@Param('id') id): Promise<string> 
     {
         const longUrl = this.redisRepositoryService.get(id);
 
@@ -62,10 +62,10 @@ export class UrlshortenerController
 
     }
 
-    // @Delete('post/:id')
-    // async deletePost(@Param('id') id: string)
+    // @Delete(':id/delete')
+    // async deleteShortURL(@Param('id') id): Promise<any>
     // {
-    //     return this.redisRepositoryService.deletePost({ id: Number(id)})
+    //     return this.redisRepositoryService.delete(id)
     // }
 
 }
