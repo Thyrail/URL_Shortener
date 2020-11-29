@@ -5,12 +5,11 @@ import { UrlShortenerService } from './services/urlshortener.service';
 import { RedisRepositoryService } from './services/redisRepository.service';
 import { ConfigModule } from '@nestjs/config';
 
-@Module ({
+@Module({
   imports: [ConfigModule.forRoot()],
 
   controllers: [UrlshortenerController, AppController],
 
-  providers: [UrlShortenerService, RedisRepositoryService]
+  providers: [UrlShortenerService, RedisRepositoryService],
 })
-
 export class AppModule {}
