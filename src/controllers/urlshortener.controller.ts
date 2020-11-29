@@ -67,7 +67,7 @@ export class UrlshortenerController
         }
     };
 
-    @Delete(':id/delete')
+    @Delete(':id')
     async deleteShortURL(@Param('id') id): Promise<any>
     {
         return this.redisRepositoryService.del(id)

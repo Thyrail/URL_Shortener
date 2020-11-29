@@ -35,7 +35,7 @@ export class RedisRepositoryService
     //     return await this.redisRepository.service.delete(id);
     // }
 
-    del(value: string): string
+    async del(value: string): Promise<number>
     {
         return this.db.del(value)
     }
