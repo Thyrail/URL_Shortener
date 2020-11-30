@@ -1,43 +1,45 @@
 import { Injectable } from '@nestjs/common';
-const Redis = require ("ioredis");
+const Redis = require('ioredis');
 
 @Injectable()
+export class RedisRepositoryService {
+  private db; // DataBase
+  
+  // export class TokenGuard implements CanActivate {
+  //   canActivate(context: ExecutionContext): boolean {
+  //     const req = context.switchToHttp().getRequest();
+  //     const authHeader = req.headers.authorization;
+  //     const token = authHeader.split(' ')[1];
+  //     return token === 'ihaveaccess';
+  //   }
+  // }
 
-export class RedisRepositoryService 
-{
-    private db; // DataBase
+  constructor() {
+    this.db = new Redis({
+      port: process.env.REDIS_PORT || 6379, // Redis port
+      host: process.env.REDIS_HOST, // LocalHost
+    });
+  }
 
-    constructor() 
-    {
-        this.db = new Redis({
-            port: process.env.REDIS_PORT || 6379, // Redis port
-            host: process.env.REDIS_HOST // LocalHost
-        });
-    };
+  /**
+   * Kurze URL hinterlegen
+   */
+  async set(key: string, value: string): Promise<void> {
+     this.db.set(key, value);
+  }
 
-    /**
-     * Kurze URL hinterlegen
-     */
-    async set(key: string, value: string): Promise<void> 
-    {
-        this.db.set(key, value);
-    };
+  /**
+   * Lange URL abfragen
+   */
+  async get(key: string): Promise<string> {
+    return this.db.get(key);
+  }
 
-    /**
-     * Lange URL abfragen
-     */
-    async get(key: string): Promise<string> 
-    {
-        return this.db.get(key);
-    };
+  // async delete(id): Promise<DeleteResult> {
+  //     return await this.redisRepository.service.delete(id);
+  // }
 
-    // async delete(id): Promise<DeleteResult> 
-    // {
-    //     return await this.redisRepository.service.delete(id);
-    // };
-
-    // delete(value: string): string
-    // {
-    //     return this.db.delete(value);
-    // };
+  async del(value: string): Promise<number> {
+    return this.db.del(value);
+  }
 }

@@ -3,20 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title> Rofl </title>
+    <link rel="stylesheet" type="text/css" href="/src/assets/css/style.css">
+    <title> Thyrail's URL-Shortener </title>
 </head>
 <body>
 
     <h1>URL Shortener</h1>
 
     {{ message }}
-
+    <div class="test">
     <form action="" method="POST">
         <label for="longUrl">Url</label>
         <input type="url" name="longUrl" id="fullUrl">
         <button type="submit">Shorten</button>
     </form>
-
+    </div>
     <table>
         <thead>
             <tr>
@@ -26,10 +27,11 @@
             </tr>
         </thead>
         <tbody>
+             shortUrlId.forEach(shortUrl => {})
             <tr>
-                <td><a href="https://baustoffe.de">https://baustoffe.de</a></td>
-                <td><a href="/251120"></a></td>
-                <td>10</td>
+                <td><a href=" longUrl "> longUrl </a></td>
+                <td><a href=" shortUrlId "> shortUrlId </a></td>
+                <td> shortUrl.clicks </td>
             </tr>
         </tbody>
     </table>
