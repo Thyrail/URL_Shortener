@@ -4,4 +4,4 @@ export interface SwaggerConfig
     description: string;
     version: string;
     tags: string;
-}
+};

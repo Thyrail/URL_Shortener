@@ -19,4 +19,4 @@ export function createDocument(app: INestApplication): OpenAPIObject
     const options = builder.build();
 
     return SwaggerModule.createDocument(app, options)
-}
+};
