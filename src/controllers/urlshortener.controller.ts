@@ -61,10 +61,10 @@ export class UrlshortenerController
       throw new NotFoundException('404')
   }
 
-  @Get(':id')
-  async findOne(@Param('id') id: string): Promise<string> {
-    return this.redisRepositoryService.findAll(id)[0]
-  }
+  // @Get(':id')
+  // async findOne(@Param('id') id: string): Promise<string> {
+  //   return this.redisRepositoryService.findAll(id)[0]
+  // }
 
   @Delete(':id')
   //@UseFilters()

@@ -8,15 +8,6 @@ export class RedisRepositoryService
 {
   private db; // DataBase
   
-  // export class TokenGuard implements CanActivate {
-  //   canActivate(context: ExecutionContext): boolean {
-  //     const req = context.switchToHttp().getRequest();
-  //     const authHeader = req.headers.authorization;
-  //     const token = authHeader.split(' ')[1];
-  //     return token === 'ihaveaccess';
-  //   }
-  // }
-
   constructor() 
   {
     this.db = new Redis({
@@ -41,10 +32,13 @@ export class RedisRepositoryService
     return await this.db.get(key);
   }
 
-  async findAll(key: string): Promise<string> {
-    return await this.db.find(key);
-  }
-
+  // async findAll(key: string): Promise<string> {
+  //   return await this.db.find(key);
+  // }
+  
+/**
+ * Kurze URL löschen
+ */
   async del(value: string): Promise<number>
   {
     return await this.db.del(value);

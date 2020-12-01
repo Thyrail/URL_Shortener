@@ -1,10 +1,11 @@
+/* eslint-disable prettier/prettier */
 // import { Injectable, NestMiddleware } from '@nestjs/common';
 // import { Request, Response } from 'express';
 
-// @Injectable()
-// export class LoggerMiddleware implements NestMiddleware {
-//   use(req: Request, res: Response, next: Function) {
-//     console.log('Request...');
-//     next();
-//   }
-// }
+/*
+Middleware zur Authentifizierung/Security zu verwenden, wäre zu OVERKILL
+für die Anwendung xD
+
+Also falls Ihr das hier seht und Euch fragt, whoooot
+Nicht beachten xD Wird noch gelöscht :P
+*/
