@@ -1,12 +1,12 @@
 /* eslint-disable prettier/prettier */
-import { Controller, Delete, Get, Param, Post, Req, Res, Render, UseFilters, ForbiddenException, Body, NotFoundException, Redirect, BadRequestException, UseGuards } from '@nestjs/common';
+import { Controller, Delete, Get, Param, Post, Req, Res, Render, UseFilters, ForbiddenException, Body, NotFoundException, Redirect, BadRequestException, UseGuards, SetMetadata } from '@nestjs/common';
 import { Request, Response } from 'express';
 import { RedisRepositoryService } from 'src/services/redisRepository.service';
 import { UrlShortenerService } from '../services/urlshortener.service';
 import { TokenGuard } from 'src/guardian/token.guard'
 
 @Controller('')
-@UseGuards(TokenGuard)
+// @UseGuards(TokenGuard)
 export class UrlshortenerController
 {
   constructor(
@@ -18,7 +18,7 @@ export class UrlshortenerController
   @Render('index')
   root() 
   {
-    return { message: 'Hello world!' };
+    return { message: 'Whazzzaaaaap!' };
   }
   /**
      * 
@@ -26,16 +26,16 @@ export class UrlshortenerController
      */
 
   @Post()
+  @UseGuards(TokenGuard)
   async addShortURL(@Req() request: Request): Promise<string> 
   {
       const longUrl = request.body.url;
       const shortUrlId = await this.urlshortenerService.shorten(longUrl);
-
       const existing = await this.redisRepositoryService.get(shortUrlId);
 
       if (existing) 
       {
-          throw new BadRequestException(`The Id: ${shortUrlId} already exists`);
+          throw new BadRequestException(`The Id: ${shortUrlId} already exists!`);
       }
       await this.redisRepositoryService.set(shortUrlId, longUrl);
 
@@ -48,17 +48,17 @@ export class UrlshortenerController
    * @endpoint GET /:id
    */
   @Get(':id')
-  //@Redirect('https://localhost:3000', 302)
-  //@UseFilters()
+  @UseGuards(TokenGuard)
+  //@Redirect
   async getLongURL(@Param('id') id): Promise<string> 
   {
-    const longUrl = this.redisRepositoryService.get(id);
+    const longUrl = await this.redisRepositoryService.get(id);
 
     if (longUrl) 
     {
-      return longUrl
+       return longUrl
     } 
-      throw new NotFoundException('404')
+      throw new BadRequestException(`This URL doesn't exist! ¯\_(ツ)_/¯ `)
   }
 
   // @Get(':id')
@@ -67,14 +67,16 @@ export class UrlshortenerController
   // }
 
   @Delete(':id')
-  //@UseFilters()
+  @UseGuards(TokenGuard)
   async deleteShortURL(@Param('id') id): Promise<string> 
   {
-    if (id) 
+    const deleteShortUrl = await this.redisRepositoryService.del(id)
+
+    if (deleteShortUrl) 
     {
-      return `The URL got successful deleted! #${this.redisRepositoryService.del(id)}`;
+      return `The target URL was successfully destroyed! ︻デ┳=--- #${this.redisRepositoryService.del(id)}`;
     }
-      throw new NotFoundException('404')
+    throw new BadRequestException(`This id has already been destroyed by the Dark side of the Force.`)
   }
 
 }

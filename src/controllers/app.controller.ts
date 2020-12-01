@@ -1,6 +1,7 @@
+/* eslint-disable prettier/prettier */
 // import { Get, Controller, Render } from '@nestjs/common';
 
-// @Controller()
+// @Controller('/urlshortener')
 // export class AppController {
 //   @Get()
 //   @Render('index')
@@ -8,4 +9,3 @@
 //     return { message: 'Hello world!' };
 //   }
 // }
-
