@@ -1,10 +1,10 @@
-import { Controller, Delete, Get, Param, Post, Req, Res, Render, UseFilters, ForbiddenException, Body, NotFoundException } from '@nestjs/common';
+/* eslint-disable prettier/prettier */
+import { Controller, Delete, Get, Param, Post, Req, Res, Render, UseFilters, ForbiddenException, Body, NotFoundException, Redirect, BadRequestException } from '@nestjs/common';
 import { Request, Response } from 'express';
 import { RedisRepositoryService } from 'src/services/redisRepository.service';
 import { UrlShortenerService } from '../services/urlshortener.service';
 
-// localhost:3000/urlshortener
-@Controller()
+@Controller('')
 export class UrlshortenerController 
 {
   constructor(
@@ -12,38 +12,57 @@ export class UrlshortenerController
     private redisRepositoryService: RedisRepositoryService,
   ) {}
 
-  @Get()
+  @Get('/urlshortener')
   @Render('index')
-  root() {
+  root() 
+  {
     return { message: 'Hello world!' };
   }
   /**
      * 
      * @endpoint GET /:id
      */
+  // @Post()
+  // //@UseFilters()
+  // async addShortURL(@Req() request: Request): Promise<string> 
+  // {
+  //   // Prüfen, ob request.body.url vorhanden ist
+  //   // Prüfen, ob der Wert eine valide URL ist
+
+  //   const longUrl = request.body.url;
+  //   const shortUrlId = await this.urlshortenerService.shorten(longUrl);
+
+  //   // Kommunikation mit Redis
+
+  //   // IIFE (Immediately invoked function expression)
+  //   // (async () => {
+  //   //   this.redisRepositoryService.set(await shortUrlId, longUrl);
+  //   // })();
+  //   this.redisRepositoryService.set(shortUrlId, longUrl);
+
+  //   // <key>-<value>
+  //   // shortUrlId-longUrl
+
+  //   return `https://localhost:3000/${shortUrlId}`;
+  // }
+
   @Post()
-  //@UseFilters()
   async addShortURL(@Req() request: Request): Promise<string> 
   {
-    // Prüfen, ob request.body.url vorhanden ist
-    // Prüfen, ob der Wert eine valide URL ist
+      const longUrl = request.body.url;
+      const shortUrlId = await this.urlshortenerService.shorten(longUrl);
 
-    const longUrl = request.body.url;
-    const shortUrlId = await this.urlshortenerService.shorten(longUrl);
+      const existing = await this.redisRepositoryService.get(shortUrlId);
+      
+      if (existing) 
+      {
+          throw new BadRequestException(`The Id: ${shortUrlId} already exists`);
+      }
+      await this.redisRepositoryService.set(shortUrlId, longUrl);
 
-    // Kommunikation mit Redis
-
-    // IIFE (Immediately invoked function expression)
-    // (async () => {
-    //   this.redisRepositoryService.set(await shortUrlId, longUrl);
-    // })();
-    this.redisRepositoryService.set(shortUrlId, longUrl);
-
-    // <key>-<value>
-    // shortUrlId-longUrl
-
-    return `https://localhost:3000/${shortUrlId}`;
+      return `https://localhost:3000/${shortUrlId}`;
   }
+
 
   /**
    * Frage zu einer short URL ID die gespeicherte lange URL von Redis ab // Test funktioniert
@@ -51,28 +70,33 @@ export class UrlshortenerController
    * @endpoint GET /:id
    */
   @Get(':id')
+  //@Redirect('https://localhost:3000', 302)
   //@UseFilters()
   async getLongURL(@Param('id') id): Promise<string> 
   {
     const longUrl = this.redisRepositoryService.get(id);
 
-    if (!longUrl) 
+    if (longUrl) 
     {
-      throw new NotFoundException('This Post does not exist');
+      return longUrl
     } 
-    else 
-    {
-    //   return `There exists no LongURL under these ID!` 
-    }
+      throw new NotFoundException('404')
   }
 
+  @Get(':id')
+  async findOne(@Param('id') id: string): Promise<string> {
+    return this.redisRepositoryService.findAll(id)[0]
+  }
 
   @Delete(':id')
   //@UseFilters()
   async deleteShortURL(@Param('id') id): Promise<string> 
   {
-    return `The URL got successful deleted! #${this.redisRepositoryService.del(id)}`;
+    if (id) 
+    {
+      return `The URL got successful deleted! #${this.redisRepositoryService.del(id)}`;
+    }
+      throw new NotFoundException('404')
   }
-
 
 }

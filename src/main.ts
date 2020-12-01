@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { NestFactory } from '@nestjs/core';
 import { NestExpressApplication } from '@nestjs/platform-express';
 import { SwaggerModule } from '@nestjs/swagger';
@@ -15,14 +16,14 @@ async function bootstrap()
   app.useStaticAssets(join(__dirname, '..', '/src/assets/css'));
   app.setBaseViewsDir(join(__dirname, '..', '/src/views'));
   app.setViewEngine('hbs');
-
+  
   // app.setGlobalPrefix('api/v1');
 
   SwaggerModule.setup('api', app, createDocument(app));
 
   await app.listen(port);
-  Logger.log(`Server is running on http://localhost:${port}`, 'Bootstrap')
+
+  Logger.log(`Server is running on http://localhost:${port}`, 'Bootstrap');
 }
 
 bootstrap();
-
