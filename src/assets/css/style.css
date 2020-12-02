@@ -1,8 +1,36 @@
-#h1 {
-    color: blue;
-    text-align: center;
+
+.button {
+  padding: 15px 25px;
+  font-size: 24px;
+  text-align: center;
+  cursor: pointer;
+  outline: none;
+  color: #fff;
+  background-color: purple;
+  border: none;
+  border-radius: 15px;
+  box-shadow: 0 9px #999;
 }
 
-.test {
+.input {
+    padding: 10px 15px;
     text-align: center;
+    color: red;
+    background-color:aqua;
+    border: 10px;
+    border-radius:15px;
+    box-shadow: 0 9px #999;
+}
+
+.button:hover {background-color: #34104d}
+
+.button:active {
+  background-color: #520e38;
+  box-shadow: 0 5px #666;
+  transform: translateY(4px);
+}
+.h1 {
+  font-weight: 200;
+  font-size: 3.2em;
+  color: rgb(52, 91, 175);
 }
