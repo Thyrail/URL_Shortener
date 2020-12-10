@@ -1,5 +1,5 @@
 /* eslint-disable prettier/prettier */
-import { Controller, Delete, Get, Param, Post, Req, Res, Render, UseFilters, ForbiddenException, Body, NotFoundException, Redirect, BadRequestException, UseGuards, SetMetadata } from '@nestjs/common';
+import { Controller, Delete, Get, Param, Post, Req, Res, Render, Body, Redirect, BadRequestException, UseGuards} from '@nestjs/common';
 import { Request, Response } from 'express';
 import { RedisRepositoryService } from 'src/services/redisRepository.service';
 import { UrlShortenerService } from '../services/urlshortener.service';
@@ -15,11 +15,22 @@ export class UrlshortenerController
   ) {}
 
   @Get('/urlshortener')
+  @UseGuards(TokenGuard)
   @Render('index')
   root() 
   {
-    return { message: 'Whazzzaaaaap!' };
+    return this.urlshortenerService
   }
+
+  // @Get(':id')
+  // @UseGuards(TokenGuard)
+  // async findAll(@Param('id') id): Promise<string> 
+  // {
+  //   const getAllShortUrls = await this.redisRepositoryService.findAll(id)
+
+  //   return getAllShortUrls;
+  // }
+
   /**
      * 
      * @endpoint GET /:id
@@ -27,20 +38,27 @@ export class UrlshortenerController
 
   @Post()
   @UseGuards(TokenGuard)
-  async addShortURL(@Req() request: Request): Promise<string> 
+  @Render('index')
+  async addShortURL(@Req() request: Request ): Promise<string> 
   {
       const longUrl = request.body.url;
       const shortUrlId = await this.urlshortenerService.shorten(longUrl);
       const existing = await this.redisRepositoryService.get(shortUrlId);
+      const reCreate = await this.redisRepositoryService.set(shortUrlId, longUrl)
 
       if (existing) 
       {
-          throw new BadRequestException(`The Id: ${shortUrlId} already exists!`);
+          throw new BadRequestException(`The id ${shortUrlId} already exists on ${longUrl}`);
       }
       await this.redisRepositoryService.set(shortUrlId, longUrl);
 
+
       return `https://localhost:3000/${shortUrlId}`;
   }
+
+  // @Post()
+  // @UseGuards(TokenGuard)
+  // async createShortURL(@Body() '')
 
   /**
    * Frage zu einer short URL ID die gespeicherte lange URL von Redis ab // Test funktioniert
@@ -61,10 +79,6 @@ export class UrlshortenerController
       throw new BadRequestException(`This URL doesn't exist! ¯\_(ツ)_/¯ `)
   }
 
-  // @Get(':id')
-  // async findOne(@Param('id') id: string): Promise<string> {
-  //   return this.redisRepositoryService.findAll(id)[0]
-  // }
 
   @Delete(':id')
   @UseGuards(TokenGuard)

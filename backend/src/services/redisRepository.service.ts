@@ -1,6 +1,6 @@
 /* eslint-disable prettier/prettier */
 /* eslint-disable @typescript-eslint/no-var-requires */
-import { Injectable } from '@nestjs/common';
+import { Injectable, HttpService } from '@nestjs/common';
 const Redis = require('ioredis');
 
 @Injectable()
@@ -8,7 +8,7 @@ export class RedisRepositoryService
 {
   private db; // DataBase
   
-  constructor() 
+  constructor(private http: HttpService) 
   {
     this.db = new Redis({
       port: process.env.REDIS_PORT || 6379, // Redis port
