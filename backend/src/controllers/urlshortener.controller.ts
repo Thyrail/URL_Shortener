@@ -44,14 +44,12 @@ export class UrlshortenerController
       const longUrl = request.body.url;
       const shortUrlId = await this.urlshortenerService.shorten(longUrl);
       const existing = await this.redisRepositoryService.get(shortUrlId);
-      const reCreate = await this.redisRepositoryService.set(shortUrlId, longUrl)
 
       if (existing) 
       {
           throw new BadRequestException(`The id ${shortUrlId} already exists on ${longUrl}`);
       }
       await this.redisRepositoryService.set(shortUrlId, longUrl);
-
 
       return `https://localhost:3000/${shortUrlId}`;
   }
