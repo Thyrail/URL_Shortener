@@ -25,4 +25,4 @@ import { StatisticComponent } from './statistic/statistic.component';
 
 export class AppModule {
 
- }
+}
