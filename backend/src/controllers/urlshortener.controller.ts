@@ -15,11 +15,10 @@ export class UrlshortenerController
   ) {}
 
   @Get('/urlshortener')
-  @UseGuards(TokenGuard)
   @Render('index')
   root() 
   {
-    return this.urlshortenerService
+    return { message: 'Das ist ein Test!'}
   }
 
   // @Get(':id')
@@ -38,11 +37,11 @@ export class UrlshortenerController
 
   @Post('/shortUrls')
   @UseGuards(TokenGuard)
-  @Render('index')
-  async addShortURL(@Req() request: Request ): Promise<string> 
+  // @Render('index')
+  async addShortURL(@Req() request: Request): Promise<string> 
   {
       const longUrl = request.body.url;
-      const shortUrlId = await this.urlshortenerService.shorten(longUrl);
+      const shortUrlId = this.urlshortenerService.shorten(longUrl);
       const existing = await this.redisRepositoryService.get(shortUrlId);
 
       if (existing) 
@@ -54,6 +53,8 @@ export class UrlshortenerController
       return `https://localhost:3000/${shortUrlId}`;
   }
 
+  // URL die mit übergeben wird, kürzen zur shortURLid, dann in REDIS nachgucken ob diese shortURLId schon existiert und davon die passende LongURL beziehen und die dann mit der aktuellen Vergleichen die gerade übergeben wird, wenn die gleich sind gibt es keine Kollision
+
   // @Post()
   // @UseGuards(TokenGuard)
   // async createShortURL(@Body() '')
@@ -63,9 +64,9 @@ export class UrlshortenerController
    *
    * @endpoint GET /:id
    */
-  @Get(':id')
+  @Get(':id') // Neuen Pfad überlegen
   @UseGuards(TokenGuard)
-  //@Redirect
+  //@Redirect('/http:')
   async getLongURL(@Param('id') id): Promise<string> 
   {
     const longUrl = await this.redisRepositoryService.get(id);
@@ -76,9 +77,8 @@ export class UrlshortenerController
     } 
       throw new BadRequestException(`This URL doesn't exist! ¯\_(ツ)_/¯ `)
   }
-
-  @Get('/')
-  async (req, res) => 
+  // Anderen Pfad überlegen für ein Get Request, zur Weiterleitung / Redirect zur originalen URL -> Langen URL Die shortUrlId zurückleiten auf die LongURL in einem neuen Pfad zurückgeben localhost:pfad
+// Neues Get anlegen mit Redirecting zur LongURL von der shortURLId
 
   @Delete(':id')
   @UseGuards(TokenGuard)

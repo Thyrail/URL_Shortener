@@ -6,7 +6,7 @@ const md5 = require('md5');
 @Injectable()
 export class UrlShortenerService 
 {
-  shorten(longUrl: string): Promise<string> 
+  shorten(longUrl: string): string 
   {
     const hash = md5(longUrl);
 

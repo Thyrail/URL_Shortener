@@ -24,6 +24,9 @@ export class RedisRepositoryService
      this.db.set(key, value);
   }
 
+ // Optimieren mit JSON.stringify als JSON Object, Counter wie oft was aufgerufen wird und darin die Informationen speichern ob es eine kollision gab
+
+
   /**
    * Lange URL abfragen
    */
