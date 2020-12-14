@@ -36,7 +36,7 @@ export class UrlshortenerController
      * @endpoint GET /:id
      */
 
-  @Post()
+  @Post('/shortUrls')
   @UseGuards(TokenGuard)
   @Render('index')
   async addShortURL(@Req() request: Request ): Promise<string> 
@@ -77,6 +77,8 @@ export class UrlshortenerController
       throw new BadRequestException(`This URL doesn't exist! ¯\_(ツ)_/¯ `)
   }
 
+  @Get('/')
+  async (req, res) => 
 
   @Delete(':id')
   @UseGuards(TokenGuard)
