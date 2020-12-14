@@ -21,7 +21,7 @@ export class RedisRepositoryService
    */
   async set(key: string, value: string): Promise<void> 
   {
-     this.db.set(key, value);
+    this.db.set(key, value);
   }
 
  // Optimieren mit JSON.stringify als JSON Object, Counter wie oft was aufgerufen wird und darin die Informationen speichern ob es eine kollision gab
