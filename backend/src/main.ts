@@ -15,7 +15,7 @@ async function bootstrap()
 
   app.useStaticAssets(join(__dirname, '..', '/src/assets/css'));
   app.setBaseViewsDir(join(__dirname, '..', '/src/views'));
-     app.setViewEngine('hbs');
+  app.setViewEngine('hbs');
   
   // app.setGlobalPrefix('api/v1');
 

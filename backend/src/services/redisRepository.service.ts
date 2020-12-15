@@ -23,7 +23,7 @@ export class RedisRepositoryService
   {
     let counter: number
 
-    this.db.set(key, value)
+    this.db.set(key, JSON.stringify(value))
     // this.db.set(JSON.stringify({key, value}))
 
     counter++
@@ -31,13 +31,13 @@ export class RedisRepositoryService
 
  // Optimieren mit JSON.stringify als JSON Object, Counter wie oft was aufgerufen wird und darin die Informationen speichern ob es eine kollision gab
 
-
   /**
    * Lange URL abfragen
    */
-  async get(key: string): Promise<string> 
+  async get(key: string): Promise<any> 
   {
-    return await this.db.get(key);
+    const  value = await this.db.get(key);
+    return JSON.parse(value);
   }
 
   // async getLongURL(key: string): Promise<any>

@@ -36,9 +36,9 @@ export class UrlshortenerController
      * @endpoint GET /:id
      */
 
-  @Post('')
+  @Post('/shorturl')
   @UseGuards(TokenGuard)
-  @Render('index')
+  // @Render('index')
   async addShortURL(@Req() request: Request): Promise<string> 
   {
       const longUrl = request.body.url;
@@ -52,16 +52,12 @@ export class UrlshortenerController
       await this.redisRepositoryService.set(shortUrlId, longUrl);
       // await this.redisRepositoryService.set(JSON.parse(shortUrlId), longUrl);
 
-      return `https://localhost:3000/api/${shortUrlId}`;
+      return `https://localhost:3000/api/shorturl/${shortUrlId}`;
   }
 
   // URL die mit übergeben wird, kürzen zur shortURLid, dann in REDIS nachgucken ob diese shortURLId schon existiert 
   // und davon die passende LongURL beziehen und die dann mit der aktuellen Vergleichen die gerade übergeben wird, 
   // wenn die gleich sind gibt es keine Kollision
-
-  // @Post()
-  // @UseGuards(TokenGuard)
-  // async createShortURL(@Body() '')
 
   /**
    * Frage zu einer short URL ID die gespeicherte lange URL von Redis ab // Test funktioniert
@@ -71,7 +67,6 @@ export class UrlshortenerController
 
   @Get('/longurl/:id') // Neuen Pfad überlegen
   @UseGuards(TokenGuard)
-  // @Redirect('api')
   async getLongURL(@Param('id') id) : Promise<any> 
   {
     const longUrl = await this.redisRepositoryService.get(id);
@@ -81,12 +76,28 @@ export class UrlshortenerController
        return { url: longUrl }
     } 
       throw new BadRequestException(`This URL doesn't exist! ¯\_(ツ)_/¯ `)
-
       // res.render('index')
   }
-  // Anderen Pfad überlegen für ein Get Request, zur Weiterleitung / Redirect zur originalen URL -> Langen URL Die shortUrlId zurückleiten auf die LongURL in einem neuen Pfad zurückgeben localhost:pfad
-// Neues Get anlegen mit Redirecting zur LongURL von der shortURLId
 
+  @Get('/redirect/:id')
+  @Redirect()
+  async getRedirectedLongURL(@Param('id') id) : Promise<any> 
+  {
+    let longUrl = await this.redisRepositoryService.get(id);
+    console.log(longUrl);
+
+    if (longUrl) 
+    {
+      if (!longUrl.startsWith('http')) 
+      {
+        longUrl = 'http://' + longUrl;
+      }
+       return { url: longUrl }
+    } 
+      throw new BadRequestException(`This URL doesn't exist! ¯\_(ツ)_/¯ `)
+  }
+  // Anderen Pfad überlegen für ein Get Request, zur Weiterleitung / Redirect zur originalen URL -> Langen URL auf die shortUrlId zurückleiten auf die LongURL in einem neuen Pfad zurückgeben localhost:pfad
+  // Neues Get anlegen mit Redirecting zur LongURL von der shortURLId
 
   @Delete(':id')
   @UseGuards(TokenGuard)
