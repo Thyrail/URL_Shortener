@@ -16,13 +16,19 @@ export class AppComponent
  
 
   constructor(private http: HttpClient) { }
+  onSubmit(data: any) {
 
-  ngOnInit(): void 
-  {
-    const headers = { 'Authorization': 'thy-api-token', }
-    this.http.get(`https://localhost:3000/`).subscribe(data => this.getShortener$.next(data));
-  }
+  // ngOnInit(): void 
+  // {
+  //   const headers = { 'Authorization': 'thy-api-token', }
+  //   this.http.get(`https://localhost:3000/`).subscribe(data => this.getShortener$.next(data));
+  // }
 
+  this.http.post('http://localhost:3000/urlshortener', data)
+  .subscribe((result) => {
+    console.warn('result')
+  })
+}
 
 }
 

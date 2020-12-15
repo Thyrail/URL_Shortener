@@ -21,7 +21,12 @@ export class RedisRepositoryService
    */
   async set(key: string, value: string): Promise<void> 
   {
-    this.db.set(key, value);
+    let counter: number
+
+    this.db.set(key, value)
+    // this.db.set(JSON.stringify({key, value}))
+
+    counter++
   }
 
  // Optimieren mit JSON.stringify als JSON Object, Counter wie oft was aufgerufen wird und darin die Informationen speichern ob es eine kollision gab
@@ -35,8 +40,13 @@ export class RedisRepositoryService
     return await this.db.get(key);
   }
 
+  // async getLongURL(key: string): Promise<any>
+  // {
+  //   return this.db.set("key:id", JSON.stringify();)
+  // }
+
   // async findAll(key: string): Promise<string> {
-  //   return await this.db.find(key);
+  //   return await this.db.get(key);
   // }
   
 /**

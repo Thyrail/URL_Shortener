@@ -6,6 +6,9 @@ const md5 = require('md5');
 @Injectable()
 export class UrlShortenerService 
 {
+  getLongURL(id: any) {
+    throw new Error('Method not implemented.');
+  }
   shorten(longUrl: string): string 
   {
     const hash = md5(longUrl);

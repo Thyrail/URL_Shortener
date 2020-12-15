@@ -6,7 +6,7 @@
 </h1>
 
 <div class="test">
-  <form action="" method="POST">
+  <form #urlPost="ngForm" (ngSubmit)="onSubmit(urlPost)">
     <label for="longUrl">Url</label>
     <input class="input" type="url" name="longUrl" id="fullUrl">
     <button class="button" type="submit">Shorten</button>
