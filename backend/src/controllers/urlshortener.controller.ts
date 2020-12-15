@@ -21,16 +21,6 @@ export class UrlshortenerController
     return { message: 'Das ist ein Test!'}
   }
 
-
-  // @Get()
-  // @UseGuards(TokenGuard)
-  // async findAll(@Query() query): Promise<string> 
-  // {
-  //   const getAllShortUrls = await this.redisRepositoryService.findAll(query.id)
-
-  //   return getAllShortUrls;
-  // }
-
   /**
      * 
      * @endpoint GET /:id
@@ -50,7 +40,6 @@ export class UrlshortenerController
           throw new BadRequestException(`The id ${shortUrlId} already exists on ${longUrl}`)
       }
       await this.redisRepositoryService.set(shortUrlId, longUrl);
-      // await this.redisRepositoryService.set(JSON.parse(shortUrlId), longUrl);
 
       return `https://localhost:3000/api/shorturl/${shortUrlId}`;
   }
