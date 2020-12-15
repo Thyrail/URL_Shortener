@@ -36,8 +36,9 @@ export class RedisRepositoryService
    */
   async get(key: string): Promise<any> 
   {
-    const  value = await this.db.get(key);
-    return JSON.parse(value);
+    const  val = await this.db.get(key);
+ 
+    return JSON.parse(val);
   }
 
   // async getLongURL(key: string): Promise<any>
