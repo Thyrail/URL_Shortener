@@ -72,13 +72,13 @@ export class UrlshortenerController
   @Get('/longurl/:id') // Neuen Pfad überlegen
   @UseGuards(TokenGuard)
   // @Redirect('api')
-  async getLongURL(@Param('id') id) : Promise<string> 
+  async getLongURL(@Param('id') id) : Promise<any> 
   {
     const longUrl = await this.redisRepositoryService.get(id);
 
     if (longUrl) 
     {
-       return longUrl
+       return { url: longUrl }
     } 
       throw new BadRequestException(`This URL doesn't exist! ¯\_(ツ)_/¯ `)
 
@@ -87,17 +87,7 @@ export class UrlshortenerController
   // Anderen Pfad überlegen für ein Get Request, zur Weiterleitung / Redirect zur originalen URL -> Langen URL Die shortUrlId zurückleiten auf die LongURL in einem neuen Pfad zurückgeben localhost:pfad
 // Neues Get anlegen mit Redirecting zur LongURL von der shortURLId
 
-  // @Get('longurl')
-  // @UseGuards(TokenGuard)
-  // @Redirect('https://localhost:3000/', 302)
-  // getRedirectedLongURL(@Query('id') id) {
 
-  //   const longUrl = this.urlshortenerService.getLongURL(id);
-
-  //   return { longUrl: 'https://localhost:3000/api/longurl' };
-  // }
-
- 
   @Delete(':id')
   @UseGuards(TokenGuard)
   async deleteShortURL(@Param('id') id): Promise<string> 
