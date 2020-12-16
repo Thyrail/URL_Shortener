@@ -19,6 +19,7 @@ export class RedisRepositoryService
 
   /**
    * Kurze URL hinterlegen
+   * JSON.stringify() Methode konvertiert einen JavaScript-Wert in einen JSON-String
    */
   async set(key: string, shortenObj: iUrlShortener): Promise<any> 
   {
@@ -27,6 +28,7 @@ export class RedisRepositoryService
 
   /**
    * Lange URL abfragen
+   * JSON.parse() erzeugt aus einem JSON-formatierten Text ein JavaScript-Objekt
    */
   async get(key: string): Promise<iUrlShortener> 
   {

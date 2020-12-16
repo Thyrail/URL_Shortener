@@ -3,7 +3,7 @@ import { BadRequestException, Controller, Get, Param, Redirect } from '@nestjs/c
 import { RedisRepositoryService } from 'src/services/redisRepository.service';
 
 @Controller()
-export class RedirectControllerController 
+export class RedirectController 
 {
     constructor(
         private redisRepositoryService: RedisRepositoryService,

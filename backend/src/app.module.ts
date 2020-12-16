@@ -4,12 +4,12 @@ import { UrlShortenerService } from './services/urlshortener.service';
 import { RedisRepositoryService } from './services/redisRepository.service';
 import { ConfigModule } from '@nestjs/config';
 // import { AppController } from './controllers/app.controller';
-import { RedirectControllerController } from './controllers/redirect-controller/redirect-controller.controller';
+import { RedirectController } from './controllers/redirect-controller/redirect.controller';
 
 @Module({
   imports: [HttpModule, ConfigModule.forRoot()],
 
-  controllers: [UrlshortenerController, RedirectControllerController],
+  controllers: [UrlshortenerController, RedirectController],
 
   providers: [UrlShortenerService, RedisRepositoryService],
 })
