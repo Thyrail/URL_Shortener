@@ -1,6 +1,7 @@
 /* eslint-disable prettier/prettier */
 /* eslint-disable @typescript-eslint/no-var-requires */
 import { Injectable, HttpService } from '@nestjs/common';
+import { iUrlShortener } from '../model/urlshortener.model'
 const Redis = require('ioredis');
 
 @Injectable()
@@ -19,36 +20,19 @@ export class RedisRepositoryService
   /**
    * Kurze URL hinterlegen
    */
-  async set(key: string, value: string): Promise<void> 
+  async set(key: string, shortenObj: iUrlShortener): Promise<any> 
   {
-    let counter: number
-
-    this.db.set(key, JSON.stringify(value))
-    // this.db.set(JSON.stringify({key, value}))
-
-    counter++
+    this.db.set(key, JSON.stringify(shortenObj))
   }
-
- // Optimieren mit JSON.stringify als JSON Object, Counter wie oft was aufgerufen wird und darin die Informationen speichern ob es eine kollision gab
 
   /**
    * Lange URL abfragen
    */
-  async get(key: string): Promise<any> 
+  async get(key: string): Promise<iUrlShortener> 
   {
-    const  val = await this.db.get(key);
- 
-    return JSON.parse(val);
+    const val = await this.db.get(key);
+    return JSON.parse(val) as iUrlShortener;
   }
-
-  // async getLongURL(key: string): Promise<any>
-  // {
-  //   return this.db.set("key:id", JSON.stringify();)
-  // }
-
-  // async findAll(key: string): Promise<string> {
-  //   return await this.db.get(key);
-  // }
   
 /**
  * Kurze URL löschen

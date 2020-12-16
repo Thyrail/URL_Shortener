@@ -1,5 +1,5 @@
 /* eslint-disable prettier/prettier */
-import { Controller, Delete, Get, Param, Post, Req, Res, Render, Body, Redirect, BadRequestException, UseGuards, Query} from '@nestjs/common';
+import { Controller, Delete, Get, Param, Post, Req, Res, Render, BadRequestException, UseGuards} from '@nestjs/common';
 import { Request, Response } from 'express';
 import { RedisRepositoryService } from 'src/services/redisRepository.service';
 import { UrlShortenerService } from '../services/urlshortener.service';
@@ -31,7 +31,7 @@ export class UrlshortenerController
   // @Render('index')
   async addShortURL(@Req() request: Request): Promise<string> 
   {
-      const longUrl = request.body.url;
+      const longUrl = request.body.url as string;
       const shortUrlId = this.urlshortenerService.shorten(longUrl);
       const existing = await this.redisRepositoryService.get(shortUrlId);
 
@@ -39,7 +39,7 @@ export class UrlshortenerController
       {
           throw new BadRequestException(`The id ${shortUrlId} already exists on ${longUrl}`)
       }
-      await this.redisRepositoryService.set(shortUrlId, longUrl);
+      await this.redisRepositoryService.set(shortUrlId, { url: longUrl, counter: 0});
 
       return `https://localhost:3000/api/shorturl/${shortUrlId}`;
   }
@@ -54,43 +54,24 @@ export class UrlshortenerController
    * @endpoint GET /:id
    */
 
-  @Get('/longurl/:id') // Neuen Pfad überlegen
+  @Get('/longurl/:id')
   @UseGuards(TokenGuard)
-  async getLongURL(@Param('id') id) : Promise<any> 
+  async getLongURL(@Param('id') id: string) : Promise<string> 
   {
     const longUrl = await this.redisRepositoryService.get(id);
 
     if (longUrl) 
     {
-       return { url: longUrl }
+      return longUrl.url;
     } 
       throw new BadRequestException(`This URL doesn't exist! ¯\_(ツ)_/¯ `)
       // res.render('index')
   }
-
-  @Get('/redirect/:id')
-  @Redirect()
-  async getRedirectedLongURL(@Param('id') id) : Promise<any> 
-  {
-    let longUrl = await this.redisRepositoryService.get(id);
-    console.log(longUrl);
-
-    if (longUrl) 
-    {
-      if (!longUrl.startsWith('http')) 
-      {
-        longUrl = 'http://' + longUrl;
-      }
-       return { url: longUrl }
-    } 
-      throw new BadRequestException(`This URL doesn't exist! ¯\_(ツ)_/¯ `)
-  }
-  // Anderen Pfad überlegen für ein Get Request, zur Weiterleitung / Redirect zur originalen URL -> Langen URL auf die shortUrlId zurückleiten auf die LongURL in einem neuen Pfad zurückgeben localhost:pfad
-  // Neues Get anlegen mit Redirecting zur LongURL von der shortURLId
+  
 
   @Delete(':id')
   @UseGuards(TokenGuard)
-  async deleteShortURL(@Param('id') id): Promise<string> 
+  async deleteShortURL(@Param('id') id: string): Promise<string> 
   {
     const deleteShortUrl = await this.redisRepositoryService.del(id)
 
