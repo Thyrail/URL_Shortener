@@ -12,11 +12,11 @@ export function createDocument(app: INestApplication): OpenAPIObject
     .addTag(OpenAPI.tags)
     .addBearerAuth(
       {
-        type: 'http',
-        scheme: 'bearer',
-        bearerFormat: 'JWT',
+        type: 'apiKey',
+        name: 'thy-api-key',
+        in: 'header',
       },
-      'access-token',
+      'access-key',
     );
 
   const options = builder.build();
