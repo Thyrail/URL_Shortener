@@ -1,4 +1,6 @@
-export interface SwaggerConfig {
+/* eslint-disable prettier/prettier */
+export interface SwaggerConfig 
+{
   title: string;
   description: string;
   version: string;
