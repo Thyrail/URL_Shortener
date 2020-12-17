@@ -4,6 +4,8 @@ import { Request, Response } from 'express';
 import { RedisRepositoryService } from 'src/services/redisRepository.service';
 import { UrlShortenerService } from '../services/urlshortener.service';
 import { TokenGuard } from 'src/guardian/token.guard'
+import { iUrlShortener } from 'src/model/urlshortener.model';
+const crypto = require('crypto');
 
 @Controller('api')
 // @UseGuards(TokenGuard)
@@ -31,19 +33,35 @@ export class UrlshortenerController
   @UseGuards(TokenGuard)
   async addShortURL(@Req() request: Request): Promise<string> 
   {
-      const longUrl = request.body.url as string;
-      const shortUrlId = this.urlshortenerService.shorten(longUrl);
+    const longUrl = request.body.url as string;
+    const shortUrlId = this.urlshortenerService.shorten(longUrl);
       const existing = await this.redisRepositoryService.get(shortUrlId);
-    
-      // const shortId = await this.redisRepositoryService.getShortUrl(longUrl, existing)
 
-      if (existing)
-      {
-          throw new BadRequestException(`The id ${shortUrlId} already exists on ${longUrl}`)
-      }
-      await this.redisRepositoryService.set(shortUrlId, { url: longUrl, counter: 0});
+    if (existing)
+    {
+      throw new BadRequestException(`The id ${shortUrlId} already exists on ${longUrl}`)
+    }
+    await this.redisRepositoryService.set(shortUrlId, { url: longUrl, counter: 0});
 
-      return `https://localhost:3000/api/shorturl/${shortUrlId}`;
+    return `https://localhost:3000/api/shorturl/${shortUrlId}`;
+  }
+
+  @Post('/collision')
+  // @Render('index')
+  @UseGuards(TokenGuard)
+  async saveLongUrl(@Req() request: Request, salt = ''): Promise<any>
+  {
+    let longUrl = request.body.url as any;
+    const shortUrlId = this.urlshortenerService.shorten(longUrl + salt);
+    const inRedis = await this.redisRepositoryService.get(shortUrlId);
+
+    if (inRedis && longUrl !== inRedis) 
+    {
+      return this.saveLongUrl(longUrl, crypto.randomBytes(8).toString());
+    }
+    await this.redisRepositoryService.set(shortUrlId, longUrl);
+
+    return `https://localhost:3000/api/collision/${shortUrlId}`;
   }
 
   /**
