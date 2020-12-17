@@ -4,7 +4,6 @@
 <head>
   <style>
 
-
   </style>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -25,7 +24,7 @@
     {{ message }}
 
     <div class="test">
-      <form action="https://localhost:3000/urlshortener" method="POST">
+      <form action="/shorten" method="POST">
         <label for="longUrl">Url</label>
         <input class="input" type="url" name="longUrl" id="fullUrl">
         <button class="button" type="submit">Shorten</button>

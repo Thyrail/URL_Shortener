@@ -35,7 +35,27 @@ export class RedisRepositoryService
     const val = await this.db.get(key);
     return JSON.parse(val) as iUrlShortener;
   }
+
+  async findAll(key: string): Promise<iUrlShortener>
+  {
+    const val = await this.db.get(key);
+    return JSON.parse(val) as iUrlShortener;
+  }
+
+  async getShortUrl(key: string, shortenObj: iUrlShortener): Promise<any>
+  {
+    const shortid = await this.db.get(shortenObj);
+    return JSON.parse(shortid) as iUrlShortener;
+  }
   
+  // createMessage(message): Observable<Object> {
+
+  //   return this.http.post('http://localhost:3000/messages', {
+  //     content: message.content,
+  //     submittedBy: message.submittedBy
+  //   })
+  // }
+
 /**
  * Kurze URL löschen
  */

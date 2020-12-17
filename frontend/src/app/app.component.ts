@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { HttpClient} from '@angular/common/http'
+import { HttpClient, HttpHeaders} from '@angular/common/http'
 import { BehaviorSubject } from 'rxjs';
 
 @Component({
@@ -16,6 +16,7 @@ export class AppComponent
  
 
   constructor(private http: HttpClient) { }
+
   onSubmit(data: any) {
 
   // ngOnInit(): void 
@@ -29,6 +30,17 @@ export class AppComponent
     console.warn('result')
   })
 }
+
+  getTransferIP() 
+  {
+    let header = new HttpHeaders().set(
+      "Authorization",
+      localStorage.getItem("token")
+    );
+
+    return this.hettp.get("http://localhost:3000/transferip", {headers:header});
+  
+  }
 
 }
 

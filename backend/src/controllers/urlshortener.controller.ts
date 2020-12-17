@@ -27,13 +27,15 @@ export class UrlshortenerController
      */
 
   @Post('/shorturl')
+  @Render('index')
   @UseGuards(TokenGuard)
-  // @Render('index')
   async addShortURL(@Req() request: Request): Promise<string> 
   {
       const longUrl = request.body.url as string;
       const shortUrlId = this.urlshortenerService.shorten(longUrl);
       const existing = await this.redisRepositoryService.get(shortUrlId);
+    
+      // const shortId = await this.redisRepositoryService.getShortUrl(longUrl, existing)
 
       if (existing)
       {
@@ -44,6 +46,12 @@ export class UrlshortenerController
       return `https://localhost:3000/api/shorturl/${shortUrlId}`;
   }
 
+  /**
+   * if make from longURL a shortURLiD and check than on REDIS if it's available
+   * if yes create another shortURLiD for the requested longURL
+   * @param id 
+   */
+ 
   // URL die mit übergeben wird, kürzen zur shortURLid, dann in REDIS nachgucken ob diese shortURLId schon existiert 
   // und davon die passende LongURL beziehen und die dann mit der aktuellen Vergleichen die gerade übergeben wird, 
   // wenn die gleich sind gibt es keine Kollision
@@ -52,7 +60,7 @@ export class UrlshortenerController
    * Frage zu einer short URL ID die gespeicherte lange URL von Redis ab // Test funktioniert
    *
    * @endpoint GET /:id
-   */
+   */ 
 
   @Get('/longurl/:id')
   @UseGuards(TokenGuard)
@@ -67,7 +75,14 @@ export class UrlshortenerController
       throw new BadRequestException(`This URL doesn't exist! ¯\_(ツ)_/¯ `)
       // res.render('index')
   }
-  
+
+  @Get()
+  @UseGuards(TokenGuard)
+  async findAll(@Param('id') id: string): Promise<any>
+  {
+    const findAllURL = await this.redisRepositoryService.get(id)
+    return findAllURL;
+  }
 
   @Delete(':id')
   @UseGuards(TokenGuard)

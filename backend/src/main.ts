@@ -26,6 +26,7 @@ async function bootstrap()
   Logger.log(`Server is running on      ==> http://localhost:${port}`, 'Bootstrap');
   Logger.log(`URL-Shortener is running on ==> http://localhost:${port}/api/urlshortener`, 'WebView');
   Logger.log(`OpenAPI is running on       ==> http://localhost:${port}/api`, 'Swagger');
+  
 }
 
 bootstrap();
