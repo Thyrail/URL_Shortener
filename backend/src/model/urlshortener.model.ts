@@ -3,4 +3,5 @@ export interface iUrlShortener
 {
     url: string;
     counter: number;
+    salt?: string;
 }
