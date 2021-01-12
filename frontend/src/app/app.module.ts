@@ -19,7 +19,9 @@ import { StatisticComponent } from './statistic/statistic.component';
     HttpClientModule,
     FormsModule,
   ],
-  providers: [],
+  providers: [
+    httpInterceptorProviders
+  ],
   bootstrap: [AppComponent]
 })
 

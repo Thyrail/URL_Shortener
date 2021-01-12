@@ -38,7 +38,7 @@ export class AppComponent
       localStorage.getItem("token")
     );
 
-    return this.hettp.get("http://localhost:3000/transferip", {headers:header});
+    return this.http.get("http://localhost:3000/transferip", {headers:header});
   
   }
 

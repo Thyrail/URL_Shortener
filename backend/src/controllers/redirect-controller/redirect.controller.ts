@@ -5,9 +5,7 @@ import { RedisRepositoryService } from 'src/services/redisRepository.service';
 @Controller()
 export class RedirectController 
 {
-    constructor (
-        private redisRepositoryService: RedisRepositoryService,
-      ) {}
+    constructor ( private redisRepositoryService: RedisRepositoryService, ) {}
 
     @Get(':id')
     @Redirect()

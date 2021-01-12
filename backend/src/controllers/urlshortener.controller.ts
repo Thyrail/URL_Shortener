@@ -61,6 +61,7 @@ export class UrlshortenerController
       const salt = crypto.randomBytes(8).toString('base64');
       const newLongUrl = `${longUrl}${salt}`;
       const newShortUrlId = this.urlshortenerService.shorten(newLongUrl);
+      
       await this.redisRepositoryService.set(newShortUrlId, { url: longUrl, counter: 0, salt} )
       console.log(newLongUrl)
     }
