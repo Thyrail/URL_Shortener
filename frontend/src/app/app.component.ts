@@ -23,11 +23,13 @@ export class AppComponent
   public getShortener$ = new BehaviorSubject({});
   constructor(private apiService: ApiService) { }
 
-  onSubmit(data: any) {
+  onSubmit(data: any) 
+  {
     
     this.apiService.post(data).pipe().subscribe(res => 
-      {
+    {
       if(data.url === "") return
+
       let longUrl = data.url;
       let shortUrl = res;
 
@@ -43,6 +45,7 @@ export class AppComponent
 
       if(!this.urls.filter(url => url.shortUrl === res).length) 
       {
+
         let urlData = 
         {
           longUrl, shortUrl, counter: 0
