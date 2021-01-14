@@ -1,16 +1,31 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
-@Injectable()
-export class ApiService {
-    constructor(private http: HttpClient) {}
+@Injectable({
+  providedIn: 'root'
+})
 
-    // getTransferIp() {
-    //     let header = new HttpHeaders().set(
-    //         "Authorization",
-    //         localStorage.getItem("token")
-    //     );
+export class ApiService 
+{
+    
+  private SERVER_URL = "http://localhost:3000/api";
 
-    //     return this.http.get("http://localhost:3000/transferip", {headers:header});
-    // }
+  constructor(private httpClient: HttpClient) { }
+
+  public post(data: object) 
+  {
+    let headers = new HttpHeaders();
+
+    headers = headers.set('thy-api-token', `${localStorage.getItem('token')}`);
+    return this.httpClient.post(`${this.SERVER_URL}`, data, 
+    {
+        headers: headers,
+        responseType: 'text'
+    });
+  }
+
+  public get() {
+
+  }
+  
 }

@@ -6,9 +6,9 @@
 </h1>
 
 <div class="test">
-  <form #urlPost="ngForm" (ngSubmit)="onSubmit(urlPost)">
-    <label for="longUrl">Url</label>
-    <input class="input" type="url" name="longUrl" id="fullUrl">
+  <form #urlPost="ngForm" (ngSubmit)="onSubmit(urlPost.value)">
+    <label for="url">Url</label>
+    <input class="input" type="url" name="url" id="fullUrl" ngModel>
     <button class="button" type="submit">Shorten</button>
   </form>
 </div>
@@ -27,6 +27,11 @@
           <td><a href=" longUrl "> longUrl </a></td>
           <td><a href=" shortUrlId "> shortUrlId </a></td>
           <td> shortUrl.clicks </td>
+        </tr>
+        <tr *ngFor="let url of urls; index as i">
+          <td key="i"><span>{{url.longUrl}}</span></td>
+          <td key="i"><span>{{url.shortUrl && url.shortUrl.split("/")[4]}}</span></td>
+          <td key="i"><span>{{url.counter}}</span></td>
         </tr>
       </tbody>
     </table>

@@ -9,18 +9,21 @@ import { StatisticComponent } from './statistic/statistic.component';
 
 
 @NgModule({
+  
   declarations: [
     AppComponent,
     StatisticComponent
   ],
+
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
   ],
+
   providers: [
-    httpInterceptorProviders
+
   ],
   bootstrap: [AppComponent]
 })

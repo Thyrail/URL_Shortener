@@ -17,7 +17,6 @@ export class UrlshortenerController
   ) {}
 
   @Get('/urlshortener')
-  @Render('index')
   root() 
   {
     return { message: 'Das ist ein Test!'}
@@ -47,7 +46,6 @@ export class UrlshortenerController
   // }
 
   @Post('')
-  // @Render('index')
   @UseGuards(TokenGuard) // https://ciphertrick.com/salt-hash-passwords-using-nodejs-crypto/
   async saveLongUrl(@Req() request: Request): Promise<string>
   { // https://de.wikipedia.org/wiki/Salt_(Kryptologie)
@@ -99,7 +97,6 @@ export class UrlshortenerController
       return longUrl.url;
     } 
       throw new BadRequestException(`This URL doesn't exist! ¯\_(ツ)_/¯ `)
-      // res.render('index')
   }
 
   @Get()

@@ -1,6 +1,14 @@
 import { Component } from '@angular/core';
-import { HttpClient, HttpHeaders} from '@angular/common/http'
 import { BehaviorSubject } from 'rxjs';
+import { ApiService } from './api.service';
+import { takeUntil } from 'rxjs/operators';
+
+interface Url 
+{
+  longUrl:string,
+  shortUrl:string,
+  counter:number
+}
 
 @Component({
   selector: 'app-root',
@@ -11,36 +19,39 @@ import { BehaviorSubject } from 'rxjs';
 export class AppComponent 
 {
   title = 'Thyrails URL-Shortener';
-  
+  urls: Url[] = [];
   public getShortener$ = new BehaviorSubject({});
- 
-
-  constructor(private http: HttpClient) { }
+  constructor(private apiService: ApiService) { }
 
   onSubmit(data: any) {
+    
+    this.apiService.post(data).pipe().subscribe(res => 
+      {
+      if(data.url === "") return
+      let longUrl = data.url;
+      let shortUrl = res;
 
-  // ngOnInit(): void 
-  // {
-  //   const headers = { 'Authorization': 'thy-api-token', }
-  //   this.http.get(`https://localhost:3000/`).subscribe(data => this.getShortener$.next(data));
-  // }
+      this.urls.map(url => 
+      {
+        if(url.shortUrl === res)
+        {
+          url.counter++;
+          return url
+        }
+        return url
+      })
 
-  this.http.post('http://localhost:3000/urlshortener', data)
-  .subscribe((result) => {
-    console.warn('result')
-  })
-}
+      if(!this.urls.filter(url => url.shortUrl === res).length) 
+      {
+        let urlData = 
+        {
+          longUrl, shortUrl, counter: 0
+        }
+        this.urls.push(urlData)
+      }
+      return
 
-  getTransferIP() 
-  {
-    let header = new HttpHeaders().set(
-      "Authorization",
-      localStorage.getItem("token")
-    );
-
-    return this.http.get("http://localhost:3000/transferip", {headers:header});
-  
+    })
   }
-
 }
 
