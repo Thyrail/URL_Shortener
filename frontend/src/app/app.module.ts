@@ -7,9 +7,8 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { StatisticComponent } from './statistic/statistic.component';
 
-
 @NgModule({
-  
+
   declarations: [
     AppComponent,
     StatisticComponent
@@ -25,6 +24,7 @@ import { StatisticComponent } from './statistic/statistic.component';
   providers: [
 
   ],
+  
   bootstrap: [AppComponent]
 })
 

@@ -2,13 +2,7 @@ import { Component } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { ApiService } from './api.service';
 import { takeUntil } from 'rxjs/operators';
-
-interface Url 
-{
-  longUrl:string,
-  shortUrl:string,
-  counter:number
-}
+import { Url } from '../model/url.model';
 
 @Component({
   selector: 'app-root',
@@ -25,7 +19,6 @@ export class AppComponent
 
   onSubmit(data: any) 
   {
-    
     this.apiService.post(data).pipe().subscribe(res => 
     {
       if(data.url === "") return
@@ -45,10 +38,9 @@ export class AppComponent
 
       if(!this.urls.filter(url => url.shortUrl === res).length) 
       {
-
         let urlData = 
         {
-          longUrl, shortUrl, counter: 0
+          longUrl, shortUrl, counter: 1
         }
         this.urls.push(urlData)
       }
@@ -57,4 +49,3 @@ export class AppComponent
     })
   }
 }
-
