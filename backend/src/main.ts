@@ -4,7 +4,6 @@ import { NestExpressApplication } from '@nestjs/platform-express';
 import { SwaggerModule } from '@nestjs/swagger';
 import { AppModule } from './app.module';
 import { createDocument } from './openAPI/swagger';
-import { join } from 'path';
 import { Logger } from '@nestjs/common'
 
 async function bootstrap() 
@@ -13,9 +12,6 @@ async function bootstrap()
 
   const port = process.env.PORT || 3000;
 
-  app.useStaticAssets(join(__dirname, '..', '/src/assets/css'));
-  app.setBaseViewsDir(join(__dirname, '..', '/src/views'));
-  app.setViewEngine('hbs');
   app.enableCors()
   
   // app.setGlobalPrefix('api/v1');
@@ -25,7 +21,6 @@ async function bootstrap()
   await app.listen(port);
 
   Logger.log(`Server is running on      ==> http://localhost:${port}`, 'Bootstrap');
-  Logger.log(`URL-Shortener is running on ==> http://localhost:${port}/api/urlshortener`, 'WebView');
   Logger.log(`OpenAPI is running on       ==> http://localhost:${port}/api`, 'Swagger');
   
 }

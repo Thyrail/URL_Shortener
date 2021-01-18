@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { ApiService } from './api.service';
-import { takeUntil } from 'rxjs/operators';
 import { Url } from '../model/url.model';
 import { NgForm } from '@angular/forms';
 
@@ -13,7 +12,7 @@ import { NgForm } from '@angular/forms';
 
 export class AppComponent
 {
-  title = 'Thyrails URL-Shortener';
+  title = 'URL-Shortener';
   urls: Url[] = [];
   public getShortener$ = new BehaviorSubject({});
   constructor(private apiService: ApiService) { }

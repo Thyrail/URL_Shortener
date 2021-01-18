@@ -1,10 +1,9 @@
 /* eslint-disable prettier/prettier */
-import { Controller, Delete, Get, Param, Post, Req, Res, Render, BadRequestException, UseGuards} from '@nestjs/common';
+import { Controller, Delete, Get, Param, Post, Req, Res, BadRequestException, UseGuards} from '@nestjs/common';
 import { Request, Response } from 'express';
 import { RedisRepositoryService } from 'src/services/redisRepository.service';
 import { UrlShortenerService } from '../services/urlshortener.service';
 import { TokenGuard } from 'src/guardian/token.guard'
-import { iUrlShortener } from 'src/model/urlshortener.model';
 import * as crypto from 'crypto'
 
 @Controller('api')
