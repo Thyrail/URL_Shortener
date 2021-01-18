@@ -98,6 +98,7 @@ export class UrlshortenerController
       throw new BadRequestException(`This URL doesn't exist! ¯\_(ツ)_/¯ `)
   }
 
+
   @Get()
   @UseGuards(TokenGuard)
   async findAll(@Param('id') id: string): Promise<any>
@@ -105,6 +106,7 @@ export class UrlshortenerController
     const findAllURL = await this.redisRepositoryService.get(id)
     return findAllURL;
   }
+
 
   @Delete(':id')
   @UseGuards(TokenGuard)
