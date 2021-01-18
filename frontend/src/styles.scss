@@ -1,1 +1,153 @@
 /* You can add global styles to this file, and also import other style files */
+html {
+    box-sizing: border-box;
+    background: #f5f5f5;
+    height: 100%;
+    width: 100%;
+    --input-height: 50px;
+    --form-radius: 7px;
+
+    --blue-dark: #0070c0;
+    --blue-light: #338dcd;
+    --textcolor: #4a4a4a;
+    --sys-grey: #706f6f;
+}
+
+*,
+*::before,
+*::after {
+    box-sizing: inherit;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    width: 100%;
+    font-family: Arial, Helvetica, sans-serif;
+    color: var(--textcolor);
+    display: flex;
+    // align-items: center;
+    justify-content: center;
+}
+
+app-root {
+    display: block;
+    max-width: 800px;
+    width: 100%;
+    background: white;
+    padding: 20px;
+
+    img {
+        display: block;
+        width: 100%;
+        height: auto;
+    }
+
+    h1 {
+        color: var(--blue-dark);
+        text-transform: uppercase;
+        margin-top: 10px;
+    }
+
+    .shortener-form {
+        display: flex;
+        justify-content: flex-start;
+
+        input {
+            flex: 1;
+            height: var(--input-height);
+            padding: 0 2%;
+            font-size: 20px;
+            border-radius: var(--form-radius);
+            border-color: #338dcd;
+            border-style: solid;
+            background: #eee;
+            outline: none;
+            color: var(--textcolor);
+            transition: background-color 0.3s ease-in-out;
+            box-shadow: 5px 4px 8px #565656;
+
+            &:focus {
+                background: white;
+            }
+        }
+
+        button {
+            font-size: 20px;
+            height: var(--input-height);
+            padding: 0 5%;
+            margin-left: 15px;
+            border-radius: var(--form-radius);
+            border-color: var(--blue-dark);
+            background: var(--blue-dark);
+            color: white;
+            border: none;
+            outline: none;
+            transition: background-color 0.3s ease-in-out;
+            text-transform: uppercase;
+            box-shadow: 5px 4px 8px #565656;
+
+            &:hover {
+                background: var(--sys-grey);
+                cursor: pointer;
+            }
+        }
+    }
+
+    .output {
+        margin-top: 60px;
+
+        table {
+            border: 1px solid #338dcd;
+            border-radius: var(--form-radius);
+            border-width: 2px;
+            border-color: #949494;
+            table-layout: fixed;
+            width: 100%;
+
+            thead {
+                text-align: left;
+                th {
+                    text-transform: uppercase;
+                    font-size: 15px;
+                    padding: 7px;
+                }
+            }
+
+            tbody {
+                tr {
+                    &:nth-child(odd) {
+                        background: #d0e2ef;
+                    }
+                    td {
+                        padding: 7px;
+                        white-space: nowrap;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media only screen and (max-width: 450px) {
+    app-root {
+        // background: yellow;
+
+        padding: 13px;
+
+        .shortener-form {
+            flex-flow: column;
+
+            input {
+                flex: initial;
+            }
+
+            button {
+                margin: 10px 0 0 0;
+            }
+        }
+    }
+}

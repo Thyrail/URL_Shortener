@@ -3,6 +3,7 @@ import { BehaviorSubject } from 'rxjs';
 import { ApiService } from './api.service';
 import { takeUntil } from 'rxjs/operators';
 import { Url } from '../model/url.model';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-root',
@@ -10,25 +11,26 @@ import { Url } from '../model/url.model';
   styleUrls: ['./app.component.scss']
 })
 
-export class AppComponent 
+export class AppComponent
 {
   title = 'Thyrails URL-Shortener';
   urls: Url[] = [];
   public getShortener$ = new BehaviorSubject({});
   constructor(private apiService: ApiService) { }
 
-  onSubmit(data: any) 
+  onSubmit(data: any, urlPost: NgForm)
   {
-    this.apiService.post(data).pipe().subscribe(res => 
+    console.log(data);
+    this.apiService.post(data).pipe().subscribe(res =>
     {
-      if(data.url === "") return
+      if (data.url === "") return
 
       let longUrl = data.url;
       let shortUrl = res;
 
-      this.urls.map(url => 
+      this.urls.map(url =>
       {
-        if(url.shortUrl === res)
+        if (url.shortUrl === res)
         {
           url.counter++;
           return url
@@ -36,9 +38,9 @@ export class AppComponent
         return url
       })
 
-      if(!this.urls.filter(url => url.shortUrl === res).length) 
+      if (!this.urls.filter(url => url.shortUrl === res).length)
       {
-        let urlData = 
+        let urlData =
         {
           longUrl, shortUrl, counter: 1
         }
@@ -47,5 +49,6 @@ export class AppComponent
       return
 
     })
+    urlPost.reset();
   }
 }
