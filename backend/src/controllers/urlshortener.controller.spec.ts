@@ -1,6 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { UrlshortenerController } from './urlshortener.controller';
 import { RedisRepositoryService } from 'src/services/redisRepository.service';
+import { Req } from '@nestjs/common';
 
 describe('UrlshortenerController', () => {
   let urlShortenerController: UrlshortenerController;
@@ -11,12 +12,12 @@ describe('UrlshortenerController', () => {
     urlShortenerController = new UrlshortenerController(RedisRepositoryService);
   });
 
-  describe('findAll', () => {
-    it('should return an array of cats', async () => {
+  describe('Post', () => {
+    it('longURL kürzen und shortURL-ID zurückgeben', async () => {
       const result = ['test'];
-      jest.spyOn(redisRepositoryService, 'findAll').mockImplementation(() => result);
+      jest.spyOn(redisRepositoryService, 'set').mockImplementation(() => result);
 
-      expect(await urlShortenerController.findAll()).toBe(result)
+      expect(await urlShortenerController.saveLongUrl()).toBe(result)
     })
   })
   });

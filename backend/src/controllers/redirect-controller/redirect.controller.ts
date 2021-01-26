@@ -21,7 +21,7 @@ export class RedirectController
         {
           longUrl = 'http://' + longUrlObj.url;
         }
-         longUrlObj.counter++;
+         longUrlObj.counter++; // Counter fürs FrontEnd übergeben für die Aufrufe
          this.redisRepositoryService.set(id, longUrlObj);
          return { url: longUrl }
       } 

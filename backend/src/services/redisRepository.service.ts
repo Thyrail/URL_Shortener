@@ -35,6 +35,7 @@ export class RedisRepositoryService
     const val = await this.db.get(key);
     return JSON.parse(val) as iUrlShortener;
   }
+  
 
   async findAll(key: string): Promise<iUrlShortener>
   {
