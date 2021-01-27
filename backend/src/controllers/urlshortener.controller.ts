@@ -26,24 +26,6 @@ export class UrlshortenerController
      * @endpoint GET /:id
      */
 
-  // @Post('/shorturl')
-  // @Render('index')
-  // @UseGuards(TokenGuard)
-  // async addShortURL(@Req() request: Request): Promise<string> 
-  // {
-  //   const longUrl = request.body.url as string;
-  //   const shortUrlId = this.urlshortenerService.shorten(longUrl);
-  //     const existing = await this.redisRepositoryService.get(shortUrlId);
-
-  //   if (existing)
-  //   {
-  //     throw new BadRequestException(`The id ${shortUrlId} already exists on ${longUrl}`)
-  //   }
-  //   await this.redisRepositoryService.set(shortUrlId, { url: longUrl, counter: 0});
-
-  //   return `https://localhost:3000/api/shorturl/${shortUrlId}`;
-  // }
-
   @Post('')
   @UseGuards(TokenGuard) // https://ciphertrick.com/salt-hash-passwords-using-nodejs-crypto/
   async saveLongUrl(@Req() request: Request): Promise<string>
@@ -99,15 +81,6 @@ export class UrlshortenerController
   }
 
 
-  @Get()
-  @UseGuards(TokenGuard)
-  async findAll(@Param('id') id: string): Promise<any>
-  {
-    const findAllURL = await this.redisRepositoryService.get(id)
-    return findAllURL;
-  }
-
-
   @Delete(':id')
   @UseGuards(TokenGuard)
   async deleteShortURL(@Param('id') id: string): Promise<string> 
@@ -120,5 +93,36 @@ export class UrlshortenerController
     }
     throw new BadRequestException(`This id has already been destroyed by the Dark side of the Force.`)
   }
+
+
+  @Get()
+  @UseGuards(TokenGuard)
+  async findAll(@Param('id') id: string): Promise<any>
+  {
+    const findAllURL = await this.redisRepositoryService.get(id)
+    return findAllURL;
+  }
+
+
+
+
+    // @Post('/shorturl')
+  // @Render('index')
+  // @UseGuards(TokenGuard)
+  // async addShortURL(@Req() request: Request): Promise<string> 
+  // {
+  //   const longUrl = request.body.url as string;
+  //   const shortUrlId = this.urlshortenerService.shorten(longUrl);
+  //     const existing = await this.redisRepositoryService.get(shortUrlId);
+
+  //   if (existing)
+  //   {
+  //     throw new BadRequestException(`The id ${shortUrlId} already exists on ${longUrl}`)
+  //   }
+  //   await this.redisRepositoryService.set(shortUrlId, { url: longUrl, counter: 0});
+
+  //   return `https://localhost:3000/api/shorturl/${shortUrlId}`;
+  // }
+
 
 }

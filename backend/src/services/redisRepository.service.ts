@@ -36,7 +36,16 @@ export class RedisRepositoryService
     return JSON.parse(val) as iUrlShortener;
   }
   
+/**
+ * Kurze URL löschen
+ */
+  async del(value: string): Promise<number>
+  {
+    return await this.db.del(value);
+  }
 
+
+  
   async findAll(key: string): Promise<iUrlShortener>
   {
     const val = await this.db.get(key);
@@ -49,11 +58,4 @@ export class RedisRepositoryService
     return JSON.parse(shortid) as iUrlShortener;
   }
 
-/**
- * Kurze URL löschen
- */
-  async del(value: string): Promise<number>
-  {
-    return await this.db.del(value);
-  }
 }
