@@ -24,7 +24,14 @@ export class ApiService
     });
   }
 
-  public get() {
+  public get(data: object)
+  {
+    let headers = new HttpHeaders();
+
+    headers = headers.set('thy-api-token', `${localStorage.getItem('token')}`);
+    return this.httpClient.get(`${this.SERVER_URL}`, data, 
+  
+   );
 
   }
   
