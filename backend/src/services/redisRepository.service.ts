@@ -15,6 +15,8 @@ export class RedisRepositoryService
       port: process.env.REDIS_PORT || 6379, // Redis port
       host: process.env.REDIS_HOST, // LocalHost
     });
+
+    // this.db.keys
   }
 
   /**
@@ -44,7 +46,6 @@ export class RedisRepositoryService
     return await this.db.del(value);
   }
 
-
   
   async findAll(key: string): Promise<iUrlShortener>
   {
@@ -57,5 +58,5 @@ export class RedisRepositoryService
     const shortid = await this.db.get(shortenObj);
     return JSON.parse(shortid) as iUrlShortener;
   }
-
+  
 }

@@ -4,7 +4,8 @@ import ConfigService from '@nestjs/config';
 import { Injectable, HttpService } from '@nestjs/common';
 import { UrlshortenerController } from 'src/controllers/urlshortener.controller';
 import { UrlShortenerService } from './urlshortener.service';
-import redis from 'redis-mock'
+import { InjectRedisClient } from '../decorators';
+import * as Redis from 'ioredis';
 
 const app: TestingModule = await Test.createTestingModule({
   imports: [
