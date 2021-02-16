@@ -44,7 +44,6 @@ export class UrlshortenerController
       await this.redisRepositoryService.set(newShortUrlId, { url: longUrl, counter: 0, salt} )
       console.log(newLongUrl)
     }
-
     await this.redisRepositoryService.set(shortUrlId, { url: longUrl, counter: 0 });
 
     return `https://localhost:3000/api/${shortUrlId}`;
@@ -103,10 +102,7 @@ export class UrlshortenerController
     return findAllURL;
   }
 
-
-
-
-    // @Post('/shorturl')
+  // @Post('/shorturl')
   // @Render('index')
   // @UseGuards(TokenGuard)
   // async addShortURL(@Req() request: Request): Promise<string> 
@@ -123,6 +119,4 @@ export class UrlshortenerController
 
   //   return `https://localhost:3000/api/shorturl/${shortUrlId}`;
   // }
-
-
 }
