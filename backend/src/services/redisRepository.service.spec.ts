@@ -7,9 +7,6 @@ import { UrlShortenerService } from './urlshortener.service';
 import { InjectRedisClient } from '../decorators';
 import * as redis from 'redis-mock'
 
-const client = redis.createClient();
-
-
 const app: TestingModule = await Test.createTestingModule({
   imports: [
     RedisRepositoryService.register({
