@@ -20,7 +20,7 @@ export class RedisRepositoryService
 
   //Kurze URL hinterlegen
   //JSON.stringify() Methode konvertiert einen JavaScript-Wert in einen JSON-String
-  async set(key: string, shortenObj: iUrlShortener): Promise<any> 
+  set(key: string, shortenObj: iUrlShortener)
   {
     this.db.set(key, JSON.stringify(shortenObj))
   }

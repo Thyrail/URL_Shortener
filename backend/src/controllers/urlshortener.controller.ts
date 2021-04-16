@@ -10,7 +10,7 @@ import * as crypto from 'crypto'
 // @UseGuards(TokenGuard)
 export class UrlshortenerController
 {
-  constructor(
+  constructor (
     private urlshortenerService: UrlShortenerService,
     private redisRepositoryService: RedisRepositoryService,
   ) {}
@@ -41,10 +41,9 @@ export class UrlshortenerController
       const newLongUrl = `${longUrl}${salt}`;
       const newShortUrlId = this.urlshortenerService.shorten(newLongUrl);
       
-      await this.redisRepositoryService.set(newShortUrlId, { url: longUrl, counter: 0, salt} )
-      console.log(newLongUrl)
+      this.redisRepositoryService.set(newShortUrlId, { url: longUrl, counter: 0, salt});
     }
-    await this.redisRepositoryService.set(shortUrlId, { url: longUrl, counter: 0 });
+    this.redisRepositoryService.set(shortUrlId, { url: longUrl, counter: 0 }); // Diese Funktion wird jedesmal zurückgegeben, ob eine Kollision ensteht oder nicht
 
     return `https://localhost:3000/api/${shortUrlId}`;
   }
@@ -79,7 +78,6 @@ export class UrlshortenerController
       throw new BadRequestException(`This URL doesn't exist! ¯\_(ツ)_/¯ `)
   }
 
-
   @Delete(':id')
   @UseGuards(TokenGuard)
   async deleteShortURL(@Param('id') id: string): Promise<string> 
@@ -88,7 +86,7 @@ export class UrlshortenerController
 
     if (deleteShortUrl) 
     {
-      return `The target URL was successfully destroyed! ︻デ┳=--- #${this.redisRepositoryService.del(id)}`;
+      return `The target URL was successfully destroyed! ︻デ┳=---`;
     }
     throw new BadRequestException(`This id has already been destroyed by the Dark side of the Force.`)
   }
